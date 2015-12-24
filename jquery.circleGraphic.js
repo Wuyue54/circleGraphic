@@ -3,12 +3,25 @@
 		$.fn.circleGraphic.defaults={
 			color:'#F90',
 			startAngle: 0,
-			//endAngle:50
+			progressvalue : 0
 		};
 
 		var opts = $.extend({},$.fn.circleGraphic.defaults,options);
 		
-		var percentage=this.html();
+		var percentage;
+		if(opts.progressvalue==0){
+			var temp = this.html();
+			if (temp === parseInt(temp, 10))
+				percentage = temp;
+			else{
+				throw new Error("Exception : NumberFormatException check your value at DIV");
+			}
+		}
+		else
+			percentage = opts.progressvalue;
+
+		this.empty();
+
 		var ID="c"+percentage+Math.random();
 		//alert(ID);
 
@@ -50,7 +63,7 @@
 		}	
 
 		function numOfPercentage(_angle,_color){
-			var angle = Math.floor(_angle*100)+1;
+			var angle = Math.floor(_angle*100);
 			var color=_color;
 			context.font = "50px fantasy";
 			context.fillStyle = color;
